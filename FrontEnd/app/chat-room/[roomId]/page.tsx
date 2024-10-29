@@ -33,6 +33,7 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
   const [remainingTime, setRemainingTime] = useState<number | null>(null)
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
   const [isUsernameDialogOpen, setIsUsernameDialogOpen] = useState(false)
+  const [isCloseChatDialogOpen, setIsCloseChatDialogOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
@@ -300,9 +301,29 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
               </div>
             </DialogContent>
           </Dialog>
-          <Button variant="ghost" onClick={handleCloseRoom} className="text-destructive">
-            <X size={24} />
-          </Button>
+          <Dialog open={isCloseChatDialogOpen} onOpenChange={setIsCloseChatDialogOpen}>
+            <DialogTrigger asChild>
+            <Button variant="ghost" className="text-destructive">
+              <X size={24} />
+            </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Close Chat Room</DialogTitle>
+              </DialogHeader>
+              <div className='flex flex-col gap-6 pt-2'>
+                <p>Are you sure you want to close this room?</p>
+                <div className='self-end flex items-center gap-2'>
+                <Button variant="ghost" onClick={(e) => {setIsCloseChatDialogOpen(false)}}>
+                    Cancel
+                  </Button>
+                  <Button variant="ghost" onClick={handleCloseRoom} className="text-destructive border border-destructive hover:bg-destructive hover:text-white">
+                    Close Room
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardHeader>
       <CardContent className="flex-grow overflow-y-auto p-4 space-y-4">
