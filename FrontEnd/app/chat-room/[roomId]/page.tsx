@@ -63,10 +63,8 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
 
     wsRef.current.onerror = (error) => {
       console.error('WebSocket error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to connect to chat room",
-        variant: "destructive",
+      toast("Error", {
+        description: "Failed to connect to chat room"
       });
     };
 
@@ -131,19 +129,16 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
           if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify({ type: 'username_change', oldUsername: username, newUsername }));
           }
-          toast({
-            title: "Username changed",
-            description: `Your new username is ${newUsername}`,
+          toast("Username changed", {
+            description: `Your new username is ${newUsername}`
           });
           setIsUsernameDialogOpen(false);
         } else {
           throw new Error(result.error || 'Failed to change username');
         }
       } catch (error) {
-        toast({
-          title: "Error",
-          description: error instanceof Error ? error.message : "Failed to change username",
-          variant: "destructive",
+        toast("Error", {
+          description: error instanceof Error ? error.message : "Failed to change username"
         });
       }
     }
@@ -164,27 +159,22 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
         setRemainingTime(null)
       }
     } else {
-      toast({
-        title: "Error",
-        description: "Failed to set delete timer",
-        variant: "destructive",
-      })
+      toast("Error", {
+        description: "Failed to set delete timer"
+      });
     }
   }
 
   const handleDownloadChat = async (format: 'txt' | 'json') => {
     const result = await downloadChat(params.roomId, format)
     if (result.success) {
-      toast({
-        title: "Success",
-        description: `Chat downloaded as ${format.toUpperCase()}`,
-      })
+      toast("Success", {
+        description: `Chat downloaded as ${format.toUpperCase()}`
+      });
     } else {
-      toast({
-        title: "Error",
-        description: "Failed to download chat",
-        variant: "destructive",
-      })
+      toast("Error", {
+        description: "Failed to download chat"
+      });
     }
   }
 
@@ -197,19 +187,16 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
     const file = event.target.files?.[0];
     if (file) {
       if (file.type !== 'application/json') {
-        toast({
-          title: "Error",
-          description: "Only JSON files are supported for import.",
-          variant: "destructive",
+        toast("Error", {
+          description: "Only JSON files are supported for import."
         });
         return;
       }
       try {
         const result = await importChat(params.roomId, file);
         if (result.success) {
-          toast({
-            title: "Success",
-            description: "Chat imported successfully",
+          toast("Success", {
+            description: "Chat imported successfully"
           });
           // Update messages with the imported data
           setMessages(result.messages.map((msg: any) => ({
@@ -225,10 +212,8 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
         }
       } catch (error) {
         console.error('Error importing chat:', error);
-        toast({
-          title: "Error",
-          description: "Failed to import chat",
-          variant: "destructive",
+        toast("Error", {
+          description: "Failed to import chat"
         });
       }
     }
@@ -250,9 +235,8 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
     try {
       const result = await deleteRoom(params.roomId);
       if (result.success) {
-        toast({
-          title: "Room Closed",
-          description: "The chat room has been deleted.",
+        toast("Room Closed", {
+          description: "The chat room has been deleted."
         });
         router.push('/');
       } else {
@@ -260,10 +244,8 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
       }
     } catch (error) {
       console.error('Error closing room:', error);
-      toast({
-        title: "Error",
-        description: "Failed to close the room",
-        variant: "destructive",
+      toast("Error", {
+        description: "Failed to close the room"
       });
     }
   };

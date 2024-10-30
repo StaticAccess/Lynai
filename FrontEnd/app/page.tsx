@@ -30,16 +30,14 @@ export default function Home() {
       if (result.success) {
         const fullLink = `${window.location.origin}/chat-room/${result.roomId}`
         setGeneratedLink(fullLink)
-        toast({
-          title: "Room Created",
-          description: "Your chat room has been successfully created.",
-        })
+        toast("Room Created", {
+          description: "Your chat room has been successfully created."
+        });
       } else {
-        toast({
-          title: "Error",
+        toast("Error", {
           description: "Failed to create chat room",
-          variant: "destructive",
-        })
+          variant: "destructive"
+        });
       }
     }
   }
@@ -56,38 +54,33 @@ export default function Home() {
 
         const result = await joinChatRoom(roomId, joinPassword)
         if (result.success) {
-          toast({
-            title: "Success",
-            description: "Joined chat room successfully",
-            variant: "default",
-          })
+          toast("Success", {
+            description: "Joined chat room successfully"
+          });
           router.push(`/chat-room/${roomId}`)
         } else {
           throw new Error(result.error || 'Failed to join chat room')
         }
       } catch (error) {
-        toast({
-          title: "Error",
+        toast("Error", {
           description: error instanceof Error ? error.message : "Failed to join chat room",
-          variant: "destructive",
-        })
+          variant: "destructive"
+        });
       }
     } else {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Please enter both chat link and password",
-        variant: "destructive",
-      })
+        variant: "destructive"
+      });
     }
   }
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedLink)
     setCopied(true)
-    toast({
-      title: "Copied",
-      description: "Link copied to clipboard",
-    })
+    toast("Copied", {
+      description: "Link copied to clipboard"
+    });
     setTimeout(() => setCopied(false), 2000)
   }
 
