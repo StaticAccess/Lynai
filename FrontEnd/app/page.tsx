@@ -93,8 +93,14 @@ export default function Home() {
         </div>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="#" className="text-gray-600 hover:text-gray-900">About</a></li>
-            <li><a href="#" className="text-gray-600 hover:text-gray-900">Contact</a></li>
+            <li>
+              <a href="/about" className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-md hover:from-blue-600 hover:to-cyan-600 transition-colors">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" className="text-gray-600 hover:text-gray-900">Contact</a>
+            </li>
           </ul>
         </nav>
       </header>
