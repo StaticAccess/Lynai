@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  frontend:
+    container_name: frontend
+    image: adityakiran876/frontend
+    ports:
+      - 3000:3000
+    networks:
+      - lynai
+    volumes:
+      - vol1:/app/data
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000  # Add this environment variable
+  
+  backend:
+    build:
+      context: ./Backend
+    container_name: backend
+    ports:
+      - 8000:8000
+    networks:
+      - lynai
+    volumes:
+      - vol1:/app/data
+
+  sqlite3:
+    image: keinos/sqlite3
+    container_name: sqlite3
+    networks:
+      - lynai
+    volumes:
+      - vol1:/data    
+    environment:
+      - SQLITE_DATABASE=mydatabase.db
+
+networks:
+  lynai:
+
+volumes:
+  vol1:
+    external: true
+
